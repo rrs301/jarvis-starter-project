@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --color-backdrop: var(--backdrop);
+  --color-shell: var(--shell);
+  --color-rail: var(--rail);
+  --color-rail-soft: var(--rail-soft);
+  --color-rail-icon: var(--rail-icon);
+  --color-card: var(--card);
+  --color-card2: var(--card2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-ink: var(--ink);
+  --color-ink-text: var(--ink-text);
+  --color-coral: var(--coral);
+  --color-coral-text: var(--coral-text);
+  --color-amber: var(--amber);
+  --color-green: var(--green);
+  --color-chip: var(--chip);
+  --color-chip-text: var(--chip-text);
+  --color-pop: var(--pop);
+  --color-pop-text: var(--pop-text);
+  --radius-shell: 34px;
+  --radius-card: 26px;
+  --shadow-card: var(--shadow);
+}
+
+:root,
+.tone-reset {
+  color-scheme: light;
+  --backdrop: #e6e7f0;
+  --shell: #f5f5f8;
+  --rail: #0e0e12;
+  --rail-soft: #24242c;
+  --rail-icon: #a3a3ae;
+  --card: #ffffff;
+  --card2: #f2f2f6;
+  --line: #e7e7ed;
+  --line-strong: #c9c9d2;
+  --text: #0e0e12;
+  --muted: #5e5e68;
+  --faint: #6e6e78;
+  --ink: #0e0e12;
+  --ink-text: #ffffff;
+  --coral: #e5502b;
+  --coral-text: #b83a17;
+  --amber: #b87800;
+  --green: #1c8a58;
+  --glow: rgba(120, 110, 255, 0.22);
+  --shadow: 0 1px 2px rgba(14, 14, 18, 0.04), 0 8px 24px rgba(14, 14, 18, 0.04);
+  /* Widget accent: the highlight colour a widget uses for "today" / "now". */
+  --pop: var(--coral);
+  --pop-text: #ffffff;
+  --chip: var(--card2);
+  --chip-text: var(--text);
+}
+
+[data-theme="dark"],
+[data-theme="dark"] .tone-reset {
+  color-scheme: dark;
+  --backdrop: #050507;
+  --shell: #0d0d11;
+  --rail: #1a1a21;
+  --rail-soft: #26262f;
+  --rail-icon: #9c9ca8;
+  --card: #16161c;
+  --card2: #202028;
+  --line: #26262e;
+  --line-strong: #3a3a44;
+  --text: #f3f3f6;
+  --muted: #a3a3ae;
+  --faint: #8e8e99;
+  --ink: #f3f3f6;
+  --ink-text: #0d0d11;
+  --coral: #e5502b;
+  --coral-text: #ff8a6b;
+  --amber: #f2b84b;
+  --green: #4fcb92;
+  --glow: rgba(110, 100, 255, 0.28);
+  --shadow: none;
+  --pop: var(--coral);
+  --pop-text: #ffffff;
+}
+
+/*
+ * Widget tones. Cards stay white (or the dark card colour); a tone only sets
+ * the small accent a widget uses for its icon chip and "today" / "now" highlights.
+ */
+.tone-plain    { --chip: var(--card2); }
+.tone-lavender { --chip-text: var(--pop); --chip: #efecff; --pop: #5a4be8; }
+.tone-sky      { --chip-text: var(--pop); --chip: #e6f2fc; --pop: #1f6fb2; }
+.tone-butter   { --chip-text: var(--pop); --chip: #fdf3d6; --pop: #a86a00; }
+.tone-mint     { --chip-text: var(--pop); --chip: #e3f4ea; --pop: #1c8a58; }
+.tone-accent   { --chip-text: var(--pop); --chip: #fde9e3; --pop: var(--coral); }
+.tone-ink      { --chip: var(--card2); --pop: var(--coral); }
+
+[data-theme="dark"] .tone-lavender { --chip: #25223d; --pop: #a99cff; }
+[data-theme="dark"] .tone-sky      { --chip: #1a2a38; --pop: #7fc4f5; }
+[data-theme="dark"] .tone-butter   { --chip: #2e2816; --pop: #f2b84b; }
+[data-theme="dark"] .tone-mint     { --chip: #192e22; --pop: #4fcb92; }
+[data-theme="dark"] .tone-accent   { --chip: #3a1d14; --pop: #ff7a55; }
+
+.widget-card {
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+.widget-card:hover {
+  box-shadow: 0 1px 2px rgba(14, 14, 18, 0.05), 0 14px 32px rgba(14, 14, 18, 0.08);
+}
+[data-theme="dark"] .widget-card:hover {
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+html,
+body {
+  background: var(--backdrop);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+/* Text fields sit inside pill containers, which show focus instead. */
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+}
+.field:has(input:focus-visible) {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--coral) 45%, transparent);
+}
+
+/* Glossy Jarvis orb: layered radial gradients. */
+.orb {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 26%),
+    radial-gradient(circle at 74% 78%, #ff9a7a 0%, rgba(255, 154, 122, 0) 48%),
+    radial-gradient(circle at 18% 72%, #7fd4ff 0%, rgba(127, 212, 255, 0) 52%),
+    radial-gradient(circle at 50% 50%, #8c7bff 0%, #5a4be8 58%, #2b1f8f 100%);
+}
+.orb-glow {
+  box-shadow: 0 24px 60px rgba(90, 75, 232, 0.35), inset -10px -14px 30px rgba(20, 10, 80, 0.35);
+}
+.orb-pulse {
+  animation: orb-pulse 1.6s ease-in-out infinite;
+}
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.glow-bg {
+  background: radial-gradient(circle at 50% 42%, var(--glow) 0%, rgba(0, 0, 0, 0) 62%), var(--card);
+}
+
+.hatched-coral {
+  background: repeating-linear-gradient(135deg, var(--coral) 0 6px, color-mix(in srgb, var(--coral) 70%, #ffffff) 6px 10px);
+}
+
+/* Widget size → flex basis in the bento. */
+.w-size-S { flex: 3 1 260px; }
+.w-size-M { flex: 4 1 320px; }
+.w-size-L { flex: 6 1 480px; }
+
+.hatched-pop {
+  background: repeating-linear-gradient(135deg, var(--pop) 0 6px, color-mix(in srgb, var(--pop) 72%, var(--card)) 6px 10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-pulse { animation: none; }
+  .widget-card { transition: none; }
+}
+
+/* Board grid (react-grid-layout) */
+.jb-grid .react-grid-item > section {
+  height: 100%;
+}
+.jb-grid .widget-drag {
+  cursor: grab;
+}
+.jb-grid .react-draggable-dragging .widget-drag {
+  cursor: grabbing;
+}
+.jb-grid .react-grid-item.react-draggable-dragging,
+.jb-grid .react-grid-item.resizing {
+  z-index: 5;
+}
+.jb-grid .react-grid-item.react-draggable-dragging > section {
+  box-shadow: 0 18px 40px rgba(14, 14, 18, 0.18), 0 2px 6px rgba(14, 14, 18, 0.08);
+  transform: scale(1.01);
+}
+.jb-grid .react-grid-item.react-grid-placeholder {
+  background: color-mix(in srgb, var(--coral) 8%, transparent);
+  border: 2px dashed var(--coral);
+  opacity: 1;
+  border-radius: 26px;
+  transition-duration: 120ms;
+}
+.jb-grid-active {
+  background-image: radial-gradient(circle, var(--line-strong) 1px, transparent 1.5px);
+  background-size: var(--jb-col) var(--jb-row);
+  background-position: calc(var(--jb-col) - 8px) calc(var(--jb-row) - 8px);
+}
+.jb-grid .react-grid-item > .react-resizable-handle {
+  width: 24px;
+  height: 24px;
+  right: 4px;
+  bottom: 4px;
+  opacity: 0;
+  cursor: se-resize;
+  transition: opacity 120ms;
+}
+.jb-grid .react-grid-item:hover > .react-resizable-handle,
+.jb-grid .react-grid-item.resizing > .react-resizable-handle {
+  opacity: 1;
+}
+.jb-grid .react-grid-item > .react-resizable-handle::after {
+  right: 6px;
+  bottom: 6px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+}
